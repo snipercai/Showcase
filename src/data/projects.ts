@@ -1,0 +1,52 @@
+import type { ProjectItem } from '@/shared/types'
+
+export const projectsData: ProjectItem[] = [
+  {
+    id: 'project-1',
+    title: 'AI Chat Interface',
+    description: '基于 React 和 OpenAI API 构建的现代化聊天界面，支持流式响应和多轮对话。',
+    techStack: ['React', 'TypeScript', 'OpenAI API', 'Tailwind CSS'],
+    githubUrl: 'https://github.com/example/ai-chat',
+    demoUrl: 'https://ai-chat-demo.vercel.app',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'project-2',
+    title: 'Image Generator App',
+    description: '使用 Stable Diffusion API 的图像生成应用，支持多种风格和参数调整。',
+    techStack: ['Next.js', 'Python', 'Stable Diffusion', 'PostgreSQL'],
+    githubUrl: 'https://github.com/example/image-gen',
+    demoUrl: 'https://image-gen-demo.vercel.app',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'project-3',
+    title: 'Code Assistant CLI',
+    description: '命令行 AI 编程助手，支持代码生成、重构和解释功能。',
+    techStack: ['Node.js', 'TypeScript', 'OpenAI API', 'Commander'],
+    githubUrl: 'https://github.com/example/code-cli',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'project-4',
+    title: 'AI Writing Platform',
+    description: 'AI 驱动的写作平台，提供文章生成、润色和翻译功能。',
+    techStack: ['Vue.js', 'FastAPI', 'PostgreSQL', 'Redis'],
+    githubUrl: 'https://github.com/example/ai-writing',
+    demoUrl: 'https://ai-writing-demo.com',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'project-5',
+    title: 'Voice Transcription Tool',
+    description: '语音转文字工具，支持多语言识别和实时转录。',
+    techStack: ['Python', 'Whisper', 'FastAPI', 'React'],
+    githubUrl: 'https://github.com/example/voice-transcribe',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+]
