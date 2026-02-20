@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 讨论区
+    url: https://github.com/snipercai/Showcase/discussions
+    about: 如果你有问题想讨论，请使用 Discussions
+  - name: 📖 项目文档
+    url: https://github.com/snipercai/Showcase#readme
+    about: 查看项目 README 了解更多信息
