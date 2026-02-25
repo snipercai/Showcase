@@ -1,14 +1,30 @@
-import { newsData } from '@/data/news'
 import type { NewsItem } from './types'
+import { newsData as initialNews } from '@/data/news'
+
+const STORAGE_KEY = 'ai-hub-news'
+
+function loadFromStorage(): NewsItem[] {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      return JSON.parse(stored)
+    }
+  } catch (e) {
+    console.error('Error loading news from localStorage:', e)
+  }
+  return initialNews
+}
 
 export async function getNews(): Promise<NewsItem[]> {
-  return newsData
+  return loadFromStorage()
 }
 
 export async function getNewsById(id: string): Promise<NewsItem | undefined> {
-  return newsData.find((item) => item.id === id)
+  const news = loadFromStorage()
+  return news.find((item) => item.id === id)
 }
 
 export async function getNewsByCategory(category: string): Promise<NewsItem[]> {
-  return newsData.filter((item) => item.category === category)
+  const news = loadFromStorage()
+  return news.filter((item) => item.category === category)
 }

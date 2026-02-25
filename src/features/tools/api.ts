@@ -1,14 +1,30 @@
-import { toolsData } from '@/data/tools'
 import type { ToolItem } from './types'
+import { toolsData as initialTools } from '@/data/tools'
+
+const STORAGE_KEY = 'ai-hub-tools'
+
+function loadFromStorage(): ToolItem[] {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      return JSON.parse(stored)
+    }
+  } catch (e) {
+    console.error('Error loading tools from localStorage:', e)
+  }
+  return initialTools
+}
 
 export async function getTools(): Promise<ToolItem[]> {
-  return toolsData
+  return loadFromStorage()
 }
 
 export async function getToolById(id: string): Promise<ToolItem | undefined> {
-  return toolsData.find((item) => item.id === id)
+  const tools = loadFromStorage()
+  return tools.find((item) => item.id === id)
 }
 
 export async function getToolsByCategory(category: string): Promise<ToolItem[]> {
-  return toolsData.filter((item) => item.category === category)
+  const tools = loadFromStorage()
+  return tools.filter((item) => item.category === category)
 }

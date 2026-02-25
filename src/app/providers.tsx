@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { ThemeProvider } from '@/shared/hooks'
+import { ThemeProvider, DataProvider } from '@/shared/hooks'
 
 interface ProvidersProps {
   children: ReactNode
@@ -8,7 +8,9 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider>
-      {children}
+      <DataProvider>
+        {children}
+      </DataProvider>
     </ThemeProvider>
   )
 }
