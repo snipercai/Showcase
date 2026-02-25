@@ -29,9 +29,9 @@ export function ProjectsPage() {
           <div className="p-2 rounded-xl bg-accent-orange/10 border border-accent-orange/20">
             <FolderGit2 className="w-5 h-5 text-accent-orange" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white">项目案例</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary">项目案例</h1>
         </div>
-        <p className="text-gray-400 ml-14">学习优秀的 AI 项目案例，获取灵感</p>
+        <p className="text-text-secondary ml-14">学习优秀的 AI 项目案例，获取灵感</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 mb-8 animate-slide-up" style={{ animationDelay: '100ms' }}>

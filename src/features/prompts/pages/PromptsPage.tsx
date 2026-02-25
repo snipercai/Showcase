@@ -36,9 +36,9 @@ export function PromptsPage() {
           <div className="p-2 rounded-xl bg-accent-purple/10 border border-accent-purple/20">
             <FileText className="w-5 h-5 text-accent-purple" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white">提示词库</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary">提示词库</h1>
         </div>
-        <p className="text-gray-400 ml-14">精选高质量提示词模板，助力 AI 对话</p>
+        <p className="text-text-secondary ml-14">精选高质量提示词模板，助力 AI 对话</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 mb-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
