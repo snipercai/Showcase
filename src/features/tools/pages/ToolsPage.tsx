@@ -36,9 +36,9 @@ export function ToolsPage() {
           <div className="p-2 rounded-xl bg-accent-lime/10 border border-accent-lime/20">
             <Wrench className="w-5 h-5 text-accent-lime" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white">AI 工具</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary">AI 工具</h1>
         </div>
-        <p className="text-gray-400 ml-14">探索各类 AI 工具，提升工作效率和创造力</p>
+        <p className="text-text-secondary ml-14">探索各类 AI 工具，提升工作效率和创造力</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 mb-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
