@@ -1,9 +1,135 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import type { NewsItem, ToolItem, PromptItem, ProjectItem } from '@/shared/types'
-import { newsData as initialNews } from '@/data/news'
-import { toolsData as initialTools } from '@/data/tools'
-import { promptsData as initialPrompts } from '@/data/prompts'
-import { projectsData as initialProjects } from '@/data/projects'
+
+// 定义类型
+interface NewsItem {
+  id: string
+  title: string
+  content: string
+  category: string
+  createdAt: string
+  updatedAt: string
+}
+
+interface ToolItem {
+  id: string
+  name: string
+  description: string
+  category: string
+  tags: string[]
+  website: string
+  isFree: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+interface PromptItem {
+  id: string
+  title: string
+  content: string
+  category: string
+  tags: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+interface ProjectItem {
+  id: string
+  title: string
+  description: string
+  techStack: string[]
+  githubUrl: string
+  demoUrl?: string
+  createdAt: string
+  updatedAt: string
+}
+
+// 初始数据
+const initialNews: NewsItem[] = [
+  {
+    id: 'news-1',
+    title: 'OpenAI 发布 GPT-5',
+    content: 'OpenAI 今日发布了最新的 GPT-5 模型，性能大幅提升，支持更复杂的任务处理。',
+    category: '技术',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'news-2',
+    title: 'AI 在医疗领域的新应用',
+    content: '研究人员使用 AI 技术成功诊断多种疾病，准确率达到 99%。',
+    category: '应用',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+]
+
+const initialTools: ToolItem[] = [
+  {
+    id: 'tool-1',
+    name: 'ChatGPT',
+    description: 'OpenAI 的对话式 AI 助手',
+    category: '对话',
+    tags: ['AI', '对话', 'OpenAI'],
+    website: 'https://chatgpt.com',
+    isFree: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'tool-2',
+    name: 'Midjourney',
+    description: 'AI 图像生成工具',
+    category: '图像',
+    tags: ['AI', '图像', '生成'],
+    website: 'https://midjourney.com',
+    isFree: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+]
+
+const initialPrompts: PromptItem[] = [
+  {
+    id: 'prompt-1',
+    title: '写文章',
+    content: '请帮我写一篇关于人工智能发展的文章，要求内容全面，结构清晰，语言流畅。',
+    category: '写作',
+    tags: ['写作', '文章', 'AI'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'prompt-2',
+    title: '创意生成',
+    content: '请为一个新的 AI 工具生成 5 个创意名称和简短描述。',
+    category: '创意',
+    tags: ['创意', '命名', 'AI'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+]
+
+const initialProjects: ProjectItem[] = [
+  {
+    id: 'project-1',
+    title: 'AI 聊天机器人',
+    description: '基于 GPT 的对话式 AI 助手',
+    techStack: ['React', 'Node.js', 'OpenAI API'],
+    githubUrl: 'https://github.com/example/ai-chatbot',
+    demoUrl: 'https://ai-chatbot.example.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'project-2',
+    title: '图像识别系统',
+    description: '使用深度学习进行图像分类和识别',
+    techStack: ['Python', 'TensorFlow', 'Flask'],
+    githubUrl: 'https://github.com/example/image-recognition',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+]
 
 const STORAGE_KEYS = {
   news: 'ai-hub-news',

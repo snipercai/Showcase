@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { MainLayout } from '@/layouts'
+import { MainLayout } from '@/layouts/MainLayout'
 import { AdminLayout } from '@/layouts/AdminLayout'
 
 const HomePage = lazy(() => import('@/features/home/HomePage'))
