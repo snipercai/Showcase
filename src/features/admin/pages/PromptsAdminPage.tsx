@@ -1,80 +1,63 @@
-import { useState } from 'react'
-import { Plus, Edit2, Trash2, Search, X } from 'lucide-react'
+import { Plus, Edit2, Trash2, Search } from 'lucide-react'
 import { Card, SearchInput } from '@/components'
 import { useDocumentTitle, useData } from '@/shared/hooks'
+import { useAdminPage } from '../hooks/useAdminPage'
+import { AdminModal } from '../components/AdminModal'
 import { PROMPT_CATEGORIES } from '@/shared/constants'
 import type { PromptItem } from '@/shared/types'
 
 export default function PromptsAdminPage() {
   useDocumentTitle('提示词管理 - 管理后台')
   const { prompts, addPrompt, updatePrompt, deletePrompt } = useData()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showModal, setShowModal] = useState(false)
-  const [editingItem, setEditingItem] = useState<PromptItem | null>(null)
-  const [formData, setFormData] = useState({
+
+  const initialFormData = {
     title: '',
     content: '',
     category: PROMPT_CATEGORIES[0] as string,
     tags: '',
+  }
+
+  const {
+    searchQuery,
+    setSearchQuery,
+    showModal,
+    editingItem,
+    formData,
+    setFormData,
+    filteredItems: filteredPrompts,
+    handleOpenModal,
+    handleCloseModal,
+    handleDelete,
+  } = useAdminPage<PromptItem, typeof initialFormData>({
+    items: prompts,
+    onAdd: addPrompt,
+    onUpdate: updatePrompt,
+    onDelete: deletePrompt,
+    getInitialFormData: () => initialFormData,
+    getItemFormData: (item) => ({
+      title: item.title,
+      content: item.content,
+      category: item.category,
+      tags: item.tags.join(', '),
+    }),
+    searchFields: (item) => [item.title, item.content],
   })
 
-  const filteredPrompts = prompts.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.content.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
-  const handleOpenModal = (item?: PromptItem) => {
-    if (item) {
-      setEditingItem(item)
-      setFormData({
-        title: item.title,
-        content: item.content,
-        category: item.category,
-        tags: item.tags.join(', '),
-      })
-    } else {
-      setEditingItem(null)
-      setFormData({
-        title: '',
-        content: '',
-        category: PROMPT_CATEGORIES[0],
-        tags: '',
-      })
-    }
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-    setEditingItem(null)
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const tags = formData.tags.split(',').map(t => t.trim()).filter(Boolean)
     
+    const submitData = {
+      ...formData,
+      tags,
+    }
+    
     if (editingItem) {
-      updatePrompt(editingItem.id, {
-        title: formData.title,
-        content: formData.content,
-        category: formData.category,
-        tags,
-      })
+      updatePrompt(editingItem.id, submitData)
     } else {
-      addPrompt({
-        title: formData.title,
-        content: formData.content,
-        category: formData.category,
-        tags,
-      })
+      addPrompt(submitData)
     }
     handleCloseModal()
-  }
-
-  const handleDelete = (id: string) => {
-    if (confirm('确定要删除这个提示词吗？')) {
-      deletePrompt(id)
-    }
   }
 
   return (
@@ -160,22 +143,12 @@ export default function PromptsAdminPage() {
         )}
       </Card>
 
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleCloseModal} />
-          <Card className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-4 border-b border-border-default">
-              <h2 className="text-lg font-display font-semibold text-text-primary">
-                {editingItem ? '编辑提示词' : '添加提示词'}
-              </h2>
-              <button
-                onClick={handleCloseModal}
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="p-4 space-y-4">
+      <AdminModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        title={editingItem ? '编辑提示词' : '添加提示词'}
+      >
+        <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">标题</label>
@@ -235,10 +208,8 @@ export default function PromptsAdminPage() {
                   {editingItem ? '保存' : '添加'}
                 </button>
               </div>
-            </form>
-          </Card>
-        </div>
-      )}
+        </form>
+      </AdminModal>
     </div>
   )
 }

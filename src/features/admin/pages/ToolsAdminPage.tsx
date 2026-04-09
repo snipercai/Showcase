@@ -1,90 +1,67 @@
-import { useState } from 'react'
-import { Plus, Edit2, Trash2, Search, X, ExternalLink } from 'lucide-react'
+import { Plus, Edit2, Trash2, Search, ExternalLink } from 'lucide-react'
 import { Card, SearchInput } from '@/components'
 import { useDocumentTitle, useData } from '@/shared/hooks'
+import { useAdminPage } from '../hooks/useAdminPage'
+import { AdminModal } from '../components/AdminModal'
 import { TOOL_CATEGORIES } from '@/shared/constants'
 import type { ToolItem } from '@/shared/types'
 
 export default function ToolsAdminPage() {
   useDocumentTitle('工具管理 - 管理后台')
   const { tools, addTool, updateTool, deleteTool } = useData()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showModal, setShowModal] = useState(false)
-  const [editingItem, setEditingItem] = useState<ToolItem | null>(null)
-  const [formData, setFormData] = useState({
+
+  const initialFormData = {
     name: '',
     description: '',
     category: TOOL_CATEGORIES[0] as string,
     tags: '',
     website: '',
     isFree: true,
+  }
+
+  const {
+    searchQuery,
+    setSearchQuery,
+    showModal,
+    editingItem,
+    formData,
+    setFormData,
+    filteredItems: filteredTools,
+    handleOpenModal,
+    handleCloseModal,
+    handleDelete,
+  } = useAdminPage<ToolItem, typeof initialFormData>({
+    items: tools,
+    onAdd: addTool,
+    onUpdate: updateTool,
+    onDelete: deleteTool,
+    getInitialFormData: () => initialFormData,
+    getItemFormData: (item) => ({
+      name: item.name,
+      description: item.description,
+      category: item.category,
+      tags: item.tags.join(', '),
+      website: item.website,
+      isFree: item.isFree,
+    }),
+    searchFields: (item) => [item.name, item.description],
   })
 
-  const filteredTools = tools.filter(item =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
-  const handleOpenModal = (item?: ToolItem) => {
-    if (item) {
-      setEditingItem(item)
-      setFormData({
-        name: item.name,
-        description: item.description,
-        category: item.category,
-        tags: item.tags.join(', '),
-        website: item.website,
-        isFree: item.isFree,
-      })
-    } else {
-      setEditingItem(null)
-      setFormData({
-        name: '',
-        description: '',
-        category: TOOL_CATEGORIES[0],
-        tags: '',
-        website: '',
-        isFree: true,
-      })
-    }
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-    setEditingItem(null)
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const tags = formData.tags.split(',').map(t => t.trim()).filter(Boolean)
     
+    const submitData = {
+      ...formData,
+      tags,
+    }
+    
     if (editingItem) {
-      updateTool(editingItem.id, {
-        name: formData.name,
-        description: formData.description,
-        category: formData.category,
-        tags,
-        website: formData.website,
-        isFree: formData.isFree,
-      })
+      updateTool(editingItem.id, submitData)
     } else {
-      addTool({
-        name: formData.name,
-        description: formData.description,
-        category: formData.category,
-        tags,
-        website: formData.website,
-        isFree: formData.isFree,
-      })
+      addTool(submitData)
     }
     handleCloseModal()
-  }
-
-  const handleDelete = (id: string) => {
-    if (confirm('确定要删除这个工具吗？')) {
-      deleteTool(id)
-    }
   }
 
   return (
@@ -191,22 +168,12 @@ export default function ToolsAdminPage() {
         )}
       </Card>
 
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleCloseModal} />
-          <Card className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-4 border-b border-border-default">
-              <h2 className="text-lg font-display font-semibold text-text-primary">
-                {editingItem ? '编辑工具' : '添加工具'}
-              </h2>
-              <button
-                onClick={handleCloseModal}
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="p-4 space-y-4">
+      <AdminModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        title={editingItem ? '编辑工具' : '添加工具'}
+      >
+        <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">名称</label>
@@ -289,10 +256,8 @@ export default function ToolsAdminPage() {
                   {editingItem ? '保存' : '添加'}
                 </button>
               </div>
-            </form>
-          </Card>
-        </div>
-      )}
+        </form>
+      </AdminModal>
     </div>
   )
 }

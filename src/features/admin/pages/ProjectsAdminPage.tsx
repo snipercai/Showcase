@@ -1,84 +1,65 @@
-import { useState } from 'react'
-import { Plus, Edit2, Trash2, Search, X, Github, ExternalLink } from 'lucide-react'
+import { Plus, Edit2, Trash2, Search, Github, ExternalLink } from 'lucide-react'
 import { Card, Tag, SearchInput } from '@/components'
 import { useDocumentTitle, useData } from '@/shared/hooks'
+import { useAdminPage } from '../hooks/useAdminPage'
+import { AdminModal } from '../components/AdminModal'
 import type { ProjectItem } from '@/shared/types'
 
 export default function ProjectsAdminPage() {
   useDocumentTitle('项目管理 - 管理后台')
   const { projects, addProject, updateProject, deleteProject } = useData()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showModal, setShowModal] = useState(false)
-  const [editingItem, setEditingItem] = useState<ProjectItem | null>(null)
-  const [formData, setFormData] = useState({
+
+  const initialFormData = {
     title: '',
     description: '',
     techStack: '',
     githubUrl: '',
     demoUrl: '',
+  }
+
+  const {
+    searchQuery,
+    setSearchQuery,
+    showModal,
+    editingItem,
+    formData,
+    setFormData,
+    filteredItems: filteredProjects,
+    handleOpenModal,
+    handleCloseModal,
+    handleDelete,
+  } = useAdminPage<ProjectItem, typeof initialFormData>({
+    items: projects,
+    onAdd: addProject,
+    onUpdate: updateProject,
+    onDelete: deleteProject,
+    getInitialFormData: () => initialFormData,
+    getItemFormData: (item) => ({
+      title: item.title,
+      description: item.description,
+      techStack: item.techStack.join(', '),
+      githubUrl: item.githubUrl,
+      demoUrl: item.demoUrl || '',
+    }),
+    searchFields: (item) => [item.title, item.description],
   })
 
-  const filteredProjects = projects.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
-  const handleOpenModal = (item?: ProjectItem) => {
-    if (item) {
-      setEditingItem(item)
-      setFormData({
-        title: item.title,
-        description: item.description,
-        techStack: item.techStack.join(', '),
-        githubUrl: item.githubUrl,
-        demoUrl: item.demoUrl || '',
-      })
-    } else {
-      setEditingItem(null)
-      setFormData({
-        title: '',
-        description: '',
-        techStack: '',
-        githubUrl: '',
-        demoUrl: '',
-      })
-    }
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-    setEditingItem(null)
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const techStack = formData.techStack.split(',').map(t => t.trim()).filter(Boolean)
     
+    const submitData = {
+      ...formData,
+      techStack,
+      demoUrl: formData.demoUrl || undefined,
+    }
+    
     if (editingItem) {
-      updateProject(editingItem.id, {
-        title: formData.title,
-        description: formData.description,
-        techStack,
-        githubUrl: formData.githubUrl,
-        demoUrl: formData.demoUrl || undefined,
-      })
+      updateProject(editingItem.id, submitData)
     } else {
-      addProject({
-        title: formData.title,
-        description: formData.description,
-        techStack,
-        githubUrl: formData.githubUrl,
-        demoUrl: formData.demoUrl || undefined,
-      })
+      addProject(submitData)
     }
     handleCloseModal()
-  }
-
-  const handleDelete = (id: string) => {
-    if (confirm('确定要删除这个项目吗？')) {
-      deleteProject(id)
-    }
   }
 
   return (
@@ -189,22 +170,12 @@ export default function ProjectsAdminPage() {
         )}
       </Card>
 
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleCloseModal} />
-          <Card className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-4 border-b border-border-default">
-              <h2 className="text-lg font-display font-semibold text-text-primary">
-                {editingItem ? '编辑项目' : '添加项目'}
-              </h2>
-              <button
-                onClick={handleCloseModal}
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="p-4 space-y-4">
+      <AdminModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        title={editingItem ? '编辑项目' : '添加项目'}
+      >
+        <form onSubmit={handleFormSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-text-secondary mb-1">标题</label>
                 <input
@@ -274,10 +245,8 @@ export default function ProjectsAdminPage() {
                   {editingItem ? '保存' : '添加'}
                 </button>
               </div>
-            </form>
-          </Card>
-        </div>
-      )}
+        </form>
+      </AdminModal>
     </div>
   )
 }
