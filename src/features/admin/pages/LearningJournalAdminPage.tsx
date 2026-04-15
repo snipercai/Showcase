@@ -1,4 +1,4 @@
-import { Plus, Edit2, Trash2, Search, BookOpen } from 'lucide-react'
+import { Plus, Edit2, Trash2, Search } from 'lucide-react'
 import { Card, SearchInput } from '@/components'
 import { useDocumentTitle, useData } from '@/shared/hooks'
 import { useAdminPage } from '../hooks/useAdminPage'
@@ -95,7 +95,7 @@ export default function LearningJournalAdminPage() {
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted w-5 h-5" />
         <SearchInput
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="搜索学习记录..."
           className="pl-12"
         />
