@@ -1,31 +1,31 @@
 import { Link } from 'react-router-dom'
-import { Newspaper, Wrench, FileText, FolderGit2, Sparkles, Plus } from 'lucide-react'
+import { BookOpen, FolderGit2, FileText, Newspaper, Sparkles, Wrench, Plus } from 'lucide-react'
 import { Card } from '@/components'
 import { useDocumentTitle, useData } from '@/shared/hooks'
 
 export default function AdminDashboard() {
   useDocumentTitle('管理后台 - AI 资源聚合')
-  const { news, tools, prompts, projects, resources } = useData()
+  const { learningJournals, projects, prompts, news, resources, tools } = useData()
 
   const stats = [
     { 
-      label: '资讯总数', 
-      value: news.length, 
-      icon: <Newspaper className="w-6 h-6" />,
-      color: 'text-accent-primary',
-      bgColor: 'bg-accent-primary/10',
-      link: '/admin/news'
+      label: '学习记录', 
+      value: learningJournals.length, 
+      icon: <BookOpen className="w-6 h-6" />,
+      color: 'text-accent-secondary',
+      bgColor: 'bg-accent-secondary/10',
+      link: '/admin/learning-journal'
     },
     { 
-      label: '工具总数', 
-      value: tools.length, 
-      icon: <Wrench className="w-6 h-6" />,
-      color: 'text-accent-success',
-      bgColor: 'bg-accent-success/10',
-      link: '/admin/tools'
+      label: '项目案例', 
+      value: projects.length, 
+      icon: <FolderGit2 className="w-6 h-6" />,
+      color: 'text-accent-tertiary',
+      bgColor: 'bg-accent-tertiary/10',
+      link: '/admin/projects'
     },
     { 
-      label: '提示词总数', 
+      label: '提示词库', 
       value: prompts.length, 
       icon: <FileText className="w-6 h-6" />,
       color: 'text-accent-tertiary',
@@ -33,20 +33,28 @@ export default function AdminDashboard() {
       link: '/admin/prompts'
     },
     { 
-      label: '项目总数', 
-      value: projects.length, 
-      icon: <FolderGit2 className="w-6 h-6" />,
-      color: 'text-accent-warning',
-      bgColor: 'bg-accent-warning/10',
-      link: '/admin/projects'
+      label: '行业资讯', 
+      value: news.length, 
+      icon: <Newspaper className="w-6 h-6" />,
+      color: 'text-accent-primary',
+      bgColor: 'bg-accent-primary/10',
+      link: '/admin/news'
     },
     { 
-      label: '资源总数', 
+      label: 'AI 资源', 
       value: resources.length, 
       icon: <Sparkles className="w-6 h-6" />,
       color: 'text-accent-primary',
       bgColor: 'bg-accent-primary/10',
       link: '/admin/resources'
+    },
+    { 
+      label: 'AI 工具', 
+      value: tools.length, 
+      icon: <Wrench className="w-6 h-6" />,
+      color: 'text-accent-success',
+      bgColor: 'bg-accent-success/10',
+      link: '/admin/tools'
     },
   ]
 
@@ -84,32 +92,46 @@ export default function AdminDashboard() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <Link
-              to="/admin/news"
-              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-primary/30 hover:bg-accent-primary/5 transition-all duration-200"
+              to="/admin/learning-journal"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-secondary/30 hover:bg-accent-secondary/5 transition-all duration-200"
             >
-              <Plus className="w-5 h-5 text-accent-primary" />
-              <span className="text-sm font-medium text-text-primary">添加资讯</span>
+              <Plus className="w-5 h-5 text-accent-secondary" />
+              <span className="text-sm font-medium text-text-primary">添加学习记录</span>
             </Link>
             <Link
-              to="/admin/tools"
-              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-success/30 hover:bg-accent-success/5 transition-all duration-200"
+              to="/admin/projects"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-tertiary/30 hover:bg-accent-tertiary/5 transition-all duration-200"
             >
-              <Plus className="w-5 h-5 text-accent-success" />
-              <span className="text-sm font-medium text-text-primary">添加工具</span>
+              <Plus className="w-5 h-5 text-accent-tertiary" />
+              <span className="text-sm font-medium text-text-primary">添加项目案例</span>
             </Link>
             <Link
               to="/admin/prompts"
               className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-tertiary/30 hover:bg-accent-tertiary/5 transition-all duration-200"
             >
               <Plus className="w-5 h-5 text-accent-tertiary" />
-              <span className="text-sm font-medium text-text-primary">添加提示词</span>
+              <span className="text-sm font-medium text-text-primary">添加提示词库</span>
             </Link>
             <Link
-              to="/admin/projects"
-              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-warning/30 hover:bg-accent-warning/5 transition-all duration-200"
+              to="/admin/news"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-primary/30 hover:bg-accent-primary/5 transition-all duration-200"
             >
-              <Plus className="w-5 h-5 text-accent-warning" />
-              <span className="text-sm font-medium text-text-primary">添加项目</span>
+              <Plus className="w-5 h-5 text-accent-primary" />
+              <span className="text-sm font-medium text-text-primary">添加行业资讯</span>
+            </Link>
+            <Link
+              to="/admin/resources"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-primary/30 hover:bg-accent-primary/5 transition-all duration-200"
+            >
+              <Plus className="w-5 h-5 text-accent-primary" />
+              <span className="text-sm font-medium text-text-primary">添加 AI 资源</span>
+            </Link>
+            <Link
+              to="/admin/tools"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-success/30 hover:bg-accent-success/5 transition-all duration-200"
+            >
+              <Plus className="w-5 h-5 text-accent-success" />
+              <span className="text-sm font-medium text-text-primary">添加 AI 工具</span>
             </Link>
             <Link
               to="/admin/resources"

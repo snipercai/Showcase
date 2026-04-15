@@ -12,7 +12,7 @@ export default function HomePage() {
   const latestProjects = projects.slice(0, 6)
   const latestNews = news.slice(0, 6)
   const latestResources = resources.slice(0, 6)
-  const latestJournals = learningJournals.slice(0, 6)
+  const latestLearningJournals = learningJournals.slice(0, 6)
 
   return (
     <div className="space-y-16">
@@ -27,11 +27,11 @@ export default function HomePage() {
 
       <Section title="学习记录" icon={<BookOpen className="w-5 h-5" />} moreLink="/learning-journal" accent="secondary" count={learningJournals.length}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
-          {latestJournals.map((journal) => (
-            <JournalCard key={journal.id} journal={journal} />
+          {latestLearningJournals.map((journal) => (
+            <LearningJournalCard key={journal.id} journal={journal} />
           ))}
         </div>
-        {latestJournals.length === 0 && <EmptyState message="暂无学习记录" />}
+        {latestLearningJournals.length === 0 && <EmptyState message="暂无学习记录数据" />}
       </Section>
 
       <Section title="项目案例" icon={<FolderGit2 className="w-5 h-5" />} moreLink="/projects" accent="tertiary" count={projects.length}>
@@ -308,7 +308,7 @@ function ResourceCard({ resource }: { resource: any }) {
   )
 }
 
-function JournalCard({ journal }: { journal: any }) {
+function LearningJournalCard({ journal }: { journal: any }) {
   return (
     <Link
       to={`/learning-journal/${journal.id}`}
@@ -324,16 +324,16 @@ function JournalCard({ journal }: { journal: any }) {
         </div>
       </div>
       <p className="text-text-secondary text-sm line-clamp-2 mb-3">{journal.excerpt}</p>
-      <div className="flex items-center justify-between">
-        <div className="flex flex-wrap gap-1.5">
-          {journal.tags.slice(0, 3).map((tag: string) => (
-            <span key={tag} className="px-2 py-0.5 rounded-md bg-bg-tertiary text-xs text-text-muted">
-              {tag}
-            </span>
-          ))}
-        </div>
+      <div className="flex flex-wrap gap-1.5 mb-3">
+        {journal.tags.slice(0, 3).map((tag: string) => (
+          <span key={tag} className="px-2 py-0.5 rounded-md bg-bg-tertiary text-xs text-text-muted">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <div className="flex items-center justify-end">
         <span className="flex items-center gap-1 text-sm text-text-muted group-hover:text-accent-secondary transition-colors">
-          阅读全文
+          阅读更多
           <ArrowRight className="w-4 h-4" />
         </span>
       </div>

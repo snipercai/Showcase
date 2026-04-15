@@ -18,11 +18,11 @@ export function MainLayout() {
             <nav className="flex items-center gap-1">
               <NavLink to="/" icon={<Home className="w-4 h-4" />}>首页</NavLink>
               <NavLink to="/learning-journal" icon={<BookOpen className="w-4 h-4" />}>学习记录</NavLink>
-              <NavLink to="/projects" icon={<Briefcase className="w-4 h-4" />}>项目</NavLink>
-              <NavLink to="/prompts" icon={<MessageSquare className="w-4 h-4" />}>提示词</NavLink>
-              <NavLink to="/news" icon={<Newspaper className="w-4 h-4" />}>资讯</NavLink>
-              <NavLink to="/resources" icon={<Sparkles className="w-4 h-4" />}>资源</NavLink>
-              <NavLink to="/tools" icon={<Wrench className="w-4 h-4" />}>工具</NavLink>
+              <NavLink to="/projects" icon={<Briefcase className="w-4 h-4" />}>项目案例</NavLink>
+              <NavLink to="/prompts" icon={<MessageSquare className="w-4 h-4" />}>提示词库</NavLink>
+              <NavLink to="/news" icon={<Newspaper className="w-4 h-4" />}>行业资讯</NavLink>
+              <NavLink to="/resources" icon={<Sparkles className="w-4 h-4" />}>AI 资源</NavLink>
+              <NavLink to="/tools" icon={<Wrench className="w-4 h-4" />}>AI 工具</NavLink>
               <Link
                 to="/admin"
                 className="ml-4 px-4 py-2 rounded-lg cyber-button text-sm font-medium"
