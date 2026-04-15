@@ -121,13 +121,14 @@ flowchart TD
 
 ### 4.1 数据管理模块
 
-**功能描述**：管理应用所有数据，包括新闻、工具、提示词和项目，支持增删改查操作，并将数据持久化到 localStorage。
+**功能描述**：管理应用所有数据，包括学习记录、项目案例、提示词库、行业资讯、AI 资源和 AI 工具，支持增删改查操作，并将数据持久化到 localStorage。
 
 **实现原理**：
 - 使用 React Context API 创建全局数据上下文
 - 利用 `useState` 管理数据状态
 - 通过 `useEffect` 监听数据变化并持久化
 - 提供 `useData` 钩子供组件使用
+- 支持 6 大栏目数据的统一管理
 
 **关键代码**：
 <mcfile name="useData.tsx" path="src/shared/hooks/useData.tsx"></mcfile> 中的 `DataProvider` 组件和 `useData` 钩子。
@@ -159,15 +160,17 @@ flowchart TD
 
 ### 4.4 管理后台模块
 
-**功能描述**：提供资源的管理界面，支持添加、编辑和删除操作。
+**功能描述**：提供资源的管理界面，支持学习记录、项目案例、提示词库、行业资讯、AI 资源、AI 工具的添加、编辑和删除操作。管理后台与前台首页栏目顺序和名称保持一致。
 
 **实现原理**：
-- 独立的管理布局
+- 独立的管理布局（AdminLayout）
 - 表单组件用于数据输入
 - 调用 `useData` 钩子的方法操作数据
+- 仪表盘显示各栏目统计数据和快速操作入口
+- 统一的导航菜单和栏目管理
 
 **关键代码**：
-<mcfile name="AdminDashboard.tsx" path="src/features/admin/pages/AdminDashboard.tsx"></mcfile> 和各资源管理页面。
+<mcfile name="AdminDashboard.tsx" path="src/features/admin/pages/AdminDashboard.tsx"></mcfile>、<mcfile name="AdminLayout.tsx" path="src/layouts/AdminLayout.tsx"></mcfile> 和各资源管理页面。
 
 ## 5. 核心 API/类/函数
 
@@ -178,10 +181,12 @@ flowchart TD
 **参数**：无
 
 **返回值**：
-- `news`: 新闻列表
-- `tools`: 工具列表
-- `prompts`: 提示词列表
-- `projects`: 项目列表
+- `learningJournals`: 学习记录列表
+- `projects`: 项目案例列表
+- `prompts`: 提示词库列表
+- `news`: 行业资讯列表
+- `resources`: AI 资源列表
+- `tools`: AI 工具列表
 - 各类资源的增删改查方法
 - `resetToDefaults`: 重置数据到默认值
 
@@ -278,26 +283,26 @@ flowchart TD
 import { useData } from '@/shared/hooks'
 
 function MyComponent() {
-  const { news, addNews, deleteNews } = useData()
+  const { learningJournals, projects, prompts, news, resources, tools } = useData()
 
-  const handleAddNews = () => {
-    addNews({
-      title: 'New AI Breakthrough',
-      summary: 'Latest developments in AI research',
-      content: 'Detailed content...',
-      category: 'Research',
-      tags: ['AI', 'Research', 'Breakthrough']
+  const handleAddLearningJournal = () => {
+    addLearningJournal({
+      title: '深度学习入门学习笔记',
+      excerpt: '记录深度学习的基础知识',
+      content: '详细内容...',
+      category: '深度学习',
+      tags: ['深度学习', '神经网络', '基础']
     })
   }
 
   return (
     <div>
-      <button onClick={handleAddNews}>Add News</button>
+      <button onClick={handleAddLearningJournal}>添加学习记录</button>
       <ul>
-        {news.map(item => (
+        {learningJournals.map(item => (
           <li key={item.id}>
             {item.title}
-            <button onClick={() => deleteNews(item.id)}>Delete</button>
+            <button onClick={() => deleteLearningJournal(item.id)}>删除</button>
           </li>
         ))}
       </ul>
@@ -332,13 +337,13 @@ function ThemeToggle() {
 
 ### 7.3 搜索功能
 
-**功能说明**：搜索应用中的资源。
+**功能说明**：搜索应用中的资源，支持跨 6 大栏目（学习记录、项目案例、提示词库、行业资讯、AI 资源、AI 工具）的搜索。
 
 **配置与依赖**：
 - 搜索算法实现于 `src/shared/utils/search.ts`
 
 **使用示例**：
-通过点击导航栏的搜索按钮打开搜索模态框，输入关键词进行搜索。
+通过点击导航栏的搜索按钮打开搜索模态框，输入关键词进行搜索，支持模糊匹配。
 
 ## 8. 配置、部署与开发
 
@@ -403,20 +408,33 @@ AI Resource Hub 是一个设计良好的前端应用，具有以下亮点：
 3. **响应式设计**：适配不同屏幕尺寸，提供良好的用户体验
 4. **数据持久化**：使用 localStorage 实现数据持久化，无需后端服务
 5. **主题切换**：支持深色/浅色模式，提升用户体验
-6. **搜索功能**：实现跨资源类型的搜索，方便用户查找信息
-7. **管理后台**：提供完整的资源管理功能
-8. **性能优化**：使用代码分割和轻量级状态管理，提升应用性能
+6. **搜索功能**：实现跨 6 大栏目的搜索，方便用户查找信息
+7. **管理后台**：提供完整的 6 大栏目管理功能（学习记录、项目案例、提示词库、行业资讯、AI 资源、AI 工具）
+8. **统一导航**：前台首页和管理后台栏目顺序与名称保持一致
+9. **性能优化**：使用代码分割和轻量级状态管理，提升应用性能
 
 **技术亮点**：
 - 利用 React 18 的 Suspense 特性实现异步组件加载
 - 自定义 Hooks 封装业务逻辑，提高代码复用性
 - 模块化设计，每个功能模块独立封装
 - 响应式 UI 设计，适配不同设备
+- 统一的导航结构，提升用户体验
 
 **应用价值**：
 - 为 AI 爱好者和开发者提供了一个集中管理和查找 AI 相关资源的平台
+- 支持 AI 学习记录管理，方便个人学习和知识积累
 - 无需后端服务即可运行，部署简单
 - 可作为个人或团队的资源管理工具
 - 代码结构清晰，可作为学习 React + TypeScript 项目的参考
+
+**栏目结构**：
+| 序号 | 栏目名称 | 说明 |
+|------|---------|------|
+| 1 | 学习记录 | AI 学习心得、实验记录、技术探索笔记 |
+| 2 | 项目案例 | 开源项目展示和技术实践案例 |
+| 3 | 提示词库 | 实用的 AI 提示词和最佳实践 |
+| 4 | 行业资讯 | AI 领域最新动态和技术新闻 |
+| 5 | AI 资源 | AI 学习资源、平台和服务 |
+| 6 | AI 工具 | 实用的 AI 工具和应用程序 |
 
 AI Resource Hub 展示了如何构建一个功能完整、用户友好的现代前端应用，通过合理的架构设计和技术选型，实现了良好的用户体验和代码可维护性。
