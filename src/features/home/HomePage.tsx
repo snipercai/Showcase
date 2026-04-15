@@ -25,22 +25,13 @@ export default function HomePage() {
         </p>
       </section>
 
-      <Section title="AI 工具" icon={<Sparkles className="w-5 h-5" />} moreLink="/tools" accent="primary" count={tools.length}>
+      <Section title="学习记录" icon={<BookOpen className="w-5 h-5" />} moreLink="/learning-journal" accent="secondary" count={learningJournals.length}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
-          {latestTools.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
+          {latestJournals.map((journal) => (
+            <JournalCard key={journal.id} journal={journal} />
           ))}
         </div>
-        {latestTools.length === 0 && <EmptyState message="暂无工具数据" />}
-      </Section>
-
-      <Section title="提示词库" icon={<FileText className="w-5 h-5" />} moreLink="/prompts" accent="secondary" count={prompts.length}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
-          {latestPrompts.map((prompt) => (
-            <PromptCard key={prompt.id} prompt={prompt} />
-          ))}
-        </div>
-        {latestPrompts.length === 0 && <EmptyState message="暂无提示词数据" />}
+        {latestJournals.length === 0 && <EmptyState message="暂无学习记录" />}
       </Section>
 
       <Section title="项目案例" icon={<FolderGit2 className="w-5 h-5" />} moreLink="/projects" accent="tertiary" count={projects.length}>
@@ -50,6 +41,15 @@ export default function HomePage() {
           ))}
         </div>
         {latestProjects.length === 0 && <EmptyState message="暂无项目数据" />}
+      </Section>
+
+      <Section title="提示词库" icon={<FileText className="w-5 h-5" />} moreLink="/prompts" accent="secondary" count={prompts.length}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
+          {latestPrompts.map((prompt) => (
+            <PromptCard key={prompt.id} prompt={prompt} />
+          ))}
+        </div>
+        {latestPrompts.length === 0 && <EmptyState message="暂无提示词数据" />}
       </Section>
 
       <Section title="行业资讯" icon={<Newspaper className="w-5 h-5" />} moreLink="/news" accent="warning" count={news.length}>
@@ -70,13 +70,13 @@ export default function HomePage() {
         {latestResources.length === 0 && <EmptyState message="暂无资源数据" />}
       </Section>
 
-      <Section title="学习记录" icon={<BookOpen className="w-5 h-5" />} moreLink="/learning-journal" accent="secondary" count={learningJournals.length}>
+      <Section title="AI 工具" icon={<Sparkles className="w-5 h-5" />} moreLink="/tools" accent="primary" count={tools.length}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
-          {latestJournals.map((journal) => (
-            <JournalCard key={journal.id} journal={journal} />
+          {latestTools.map((tool) => (
+            <ToolCard key={tool.id} tool={tool} />
           ))}
         </div>
-        {latestJournals.length === 0 && <EmptyState message="暂无学习记录" />}
+        {latestTools.length === 0 && <EmptyState message="暂无工具数据" />}
       </Section>
     </div>
   )
