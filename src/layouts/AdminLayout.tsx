@@ -6,6 +6,7 @@ import {
   Wrench, 
   FileText, 
   FolderGit2, 
+  Sparkles,
   Menu, 
   X,
   ArrowLeft
@@ -18,6 +19,7 @@ const ADMIN_NAV_ITEMS = [
   { path: '/admin/tools', label: '工具管理', icon: <Wrench className="w-5 h-5" /> },
   { path: '/admin/prompts', label: '提示词管理', icon: <FileText className="w-5 h-5" /> },
   { path: '/admin/projects', label: '项目管理', icon: <FolderGit2 className="w-5 h-5" /> },
+  { path: '/admin/resources', label: '资源管理', icon: <Sparkles className="w-5 h-5" /> },
 ]
 
 export function AdminLayout() {

@@ -1,5 +1,5 @@
 import { Outlet, Link } from 'react-router-dom'
-import { Home, Newspaper, Wrench, MessageSquare, Briefcase, Cpu } from 'lucide-react'
+import { Home, Newspaper, Wrench, MessageSquare, Briefcase, Cpu, Sparkles, BookOpen } from 'lucide-react'
 
 export function MainLayout() {
   return (
@@ -18,6 +18,8 @@ export function MainLayout() {
             <nav className="flex items-center gap-1">
               <NavLink to="/" icon={<Home className="w-4 h-4" />}>首页</NavLink>
               <NavLink to="/tools" icon={<Wrench className="w-4 h-4" />}>工具</NavLink>
+              <NavLink to="/resources" icon={<Sparkles className="w-4 h-4" />}>资源</NavLink>
+              <NavLink to="/learning-journal" icon={<BookOpen className="w-4 h-4" />}>学习记录</NavLink>
               <NavLink to="/prompts" icon={<MessageSquare className="w-4 h-4" />}>提示词</NavLink>
               <NavLink to="/projects" icon={<Briefcase className="w-4 h-4" />}>项目</NavLink>
               <NavLink to="/news" icon={<Newspaper className="w-4 h-4" />}>资讯</NavLink>

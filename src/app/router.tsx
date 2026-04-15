@@ -9,12 +9,17 @@ const NewsDetailPage = lazy(() => import('@/features/news/pages/NewsDetailPage')
 const ToolsPage = lazy(() => import('@/features/tools/pages/ToolsPage').then(m => ({ default: m.ToolsPage })))
 const PromptsPage = lazy(() => import('@/features/prompts/pages/PromptsPage').then(m => ({ default: m.PromptsPage })))
 const ProjectsPage = lazy(() => import('@/features/projects/pages/ProjectsPage').then(m => ({ default: m.ProjectsPage })))
+const ResourcesPage = lazy(() => import('@/features/resources/pages/ResourcesPage').then(m => ({ default: m.ResourcesPage })))
+const LearningJournalPage = lazy(() => import('@/features/learning-journal/pages/LearningJournalPage').then(m => ({ default: m.LearningJournalPage })))
+const LearningJournalDetailPage = lazy(() => import('@/features/learning-journal/pages/LearningJournalDetailPage').then(m => ({ default: m.LearningJournalDetailPage })))
 
 const AdminDashboard = lazy(() => import('@/features/admin/pages/AdminDashboard'))
 const NewsAdminPage = lazy(() => import('@/features/admin/pages/NewsAdminPage'))
 const ToolsAdminPage = lazy(() => import('@/features/admin/pages/ToolsAdminPage'))
 const PromptsAdminPage = lazy(() => import('@/features/admin/pages/PromptsAdminPage'))
 const ProjectsAdminPage = lazy(() => import('@/features/admin/pages/ProjectsAdminPage'))
+const ResourcesAdminPage = lazy(() => import('@/features/admin/pages/ResourcesAdminPage'))
+const LearningJournalAdminPage = lazy(() => import('@/features/admin/pages/LearningJournalAdminPage'))
 
 const LoadingFallback = (
   <div className="flex items-center justify-center min-h-[400px]">
@@ -75,6 +80,30 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: 'resources',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <ResourcesPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'learning-journal',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <LearningJournalPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'learning-journal/:id',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <LearningJournalDetailPage />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
@@ -118,6 +147,22 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={LoadingFallback}>
             <ProjectsAdminPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'resources',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <ResourcesAdminPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'learning-journal',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <LearningJournalAdminPage />
           </Suspense>
         ),
       },
