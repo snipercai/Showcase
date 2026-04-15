@@ -51,3 +51,15 @@ export interface ProjectItem {
   createdAt: string
   updatedAt: string
 }
+
+export interface LearningJournalItem {
+  id: string
+  title: string
+  excerpt: string
+  content: string
+  category: string
+  tags: string[]
+  coverImage?: string
+  createdAt: string
+  updatedAt: string
+}
