@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import { Newspaper, Wrench, FileText, FolderGit2, Plus } from 'lucide-react'
+import { Newspaper, Wrench, FileText, FolderGit2, Sparkles, Plus } from 'lucide-react'
 import { Card } from '@/components'
 import { useDocumentTitle, useData } from '@/shared/hooks'
 
 export default function AdminDashboard() {
   useDocumentTitle('管理后台 - AI 资源聚合')
-  const { news, tools, prompts, projects } = useData()
+  const { news, tools, prompts, projects, resources } = useData()
 
   const stats = [
     { 
@@ -39,6 +39,14 @@ export default function AdminDashboard() {
       color: 'text-accent-warning',
       bgColor: 'bg-accent-warning/10',
       link: '/admin/projects'
+    },
+    { 
+      label: '资源总数', 
+      value: resources.length, 
+      icon: <Sparkles className="w-6 h-6" />,
+      color: 'text-accent-primary',
+      bgColor: 'bg-accent-primary/10',
+      link: '/admin/resources'
     },
   ]
 
@@ -102,6 +110,13 @@ export default function AdminDashboard() {
             >
               <Plus className="w-5 h-5 text-accent-warning" />
               <span className="text-sm font-medium text-text-primary">添加项目</span>
+            </Link>
+            <Link
+              to="/admin/resources"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-primary/30 hover:bg-accent-primary/5 transition-all duration-200"
+            >
+              <Plus className="w-5 h-5 text-accent-primary" />
+              <span className="text-sm font-medium text-text-primary">添加资源</span>
             </Link>
           </div>
         </Card>
