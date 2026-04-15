@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
+import type { ResourceItem } from '@/shared/types'
 
 // 定义类型
 interface NewsItem {
@@ -131,11 +132,37 @@ const initialProjects: ProjectItem[] = [
   }
 ]
 
+const initialResources: ResourceItem[] = [
+  {
+    id: 'resource-1',
+    name: 'Hugging Face',
+    description: '领先的 AI 模型社区和平台，提供大量预训练模型和数据集',
+    url: 'https://huggingface.co',
+    category: '模型',
+    tags: ['AI', '模型', 'NLP'],
+    isFree: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'resource-2',
+    name: 'Papers With Code',
+    description: '机器学习论文和代码集合，跟踪 AI 领域最新研究进展',
+    url: 'https://paperswithcode.com',
+    category: '研究',
+    tags: ['论文', '代码', '研究'],
+    isFree: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+]
+
 const STORAGE_KEYS = {
   news: 'ai-hub-news',
   tools: 'ai-hub-tools',
   prompts: 'ai-hub-prompts',
   projects: 'ai-hub-projects',
+  resources: 'ai-hub-resources',
 }
 
 interface DataContextType {
@@ -143,6 +170,7 @@ interface DataContextType {
   tools: ToolItem[]
   prompts: PromptItem[]
   projects: ProjectItem[]
+  resources: ResourceItem[]
   
   addNews: (item: Omit<NewsItem, 'id' | 'createdAt' | 'updatedAt'>) => void
   updateNews: (id: string, item: Partial<NewsItem>) => void
@@ -159,6 +187,10 @@ interface DataContextType {
   addProject: (item: Omit<ProjectItem, 'id' | 'createdAt' | 'updatedAt'>) => void
   updateProject: (id: string, item: Partial<ProjectItem>) => void
   deleteProject: (id: string) => void
+  
+  addResource: (item: Omit<ResourceItem, 'id' | 'createdAt' | 'updatedAt'>) => void
+  updateResource: (id: string, item: Partial<ResourceItem>) => void
+  deleteResource: (id: string) => void
   
   resetToDefaults: () => void
 }
@@ -198,6 +230,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<ProjectItem[]>(() => 
     loadFromStorage(STORAGE_KEYS.projects, initialProjects)
   )
+  const [resources, setResources] = useState<ResourceItem[]>(() => 
+    loadFromStorage(STORAGE_KEYS.resources, initialResources)
+  )
 
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.news, news)
@@ -214,6 +249,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.projects, projects)
   }, [projects])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.resources, resources)
+  }, [resources])
 
   const addNews = useCallback((item: Omit<NewsItem, 'id' | 'createdAt' | 'updatedAt'>) => {
     const now = new Date().toISOString()
@@ -299,11 +338,33 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setProjects(prev => prev.filter(p => p.id !== id))
   }, [])
 
+  const addResource = useCallback((item: Omit<ResourceItem, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const now = new Date().toISOString()
+    const newItem: ResourceItem = {
+      ...item,
+      id: `resource-${Date.now()}`,
+      createdAt: now,
+      updatedAt: now,
+    }
+    setResources(prev => [newItem, ...prev])
+  }, [])
+
+  const updateResource = useCallback((id: string, item: Partial<ResourceItem>) => {
+    setResources(prev => prev.map(r => 
+      r.id === id ? { ...r, ...item, updatedAt: new Date().toISOString() } : r
+    ))
+  }, [])
+
+  const deleteResource = useCallback((id: string) => {
+    setResources(prev => prev.filter(r => r.id !== id))
+  }, [])
+
   const resetToDefaults = useCallback(() => {
     setNews(initialNews)
     setTools(initialTools)
     setPrompts(initialPrompts)
     setProjects(initialProjects)
+    setResources(initialResources)
   }, [])
 
   return (
@@ -312,6 +373,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       tools,
       prompts,
       projects,
+      resources,
       addNews,
       updateNews,
       deleteNews,
@@ -324,6 +386,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
       addProject,
       updateProject,
       deleteProject,
+      addResource,
+      updateResource,
+      deleteResource,
       resetToDefaults,
     }}>
       {children}
