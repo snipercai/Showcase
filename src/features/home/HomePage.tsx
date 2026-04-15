@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles, FileText, FolderGit2, Newspaper, ExternalLink, Copy, Globe } from 'lucide-react'
+import { ArrowRight, Sparkles, FileText, FolderGit2, Newspaper, ExternalLink, Copy, Globe, BookOpen } from 'lucide-react'
 import { useDocumentTitle, useData } from '@/shared/hooks'
 
 export default function HomePage() {
   useDocumentTitle('AI 资源中心 - 发现最新 AI 工具与资讯')
 
-  const { tools, prompts, projects, news, resources } = useData()
+  const { tools, prompts, projects, news, resources, learningJournals } = useData()
 
   const latestTools = tools.slice(0, 6)
   const latestPrompts = prompts.slice(0, 6)
   const latestProjects = projects.slice(0, 6)
   const latestNews = news.slice(0, 6)
   const latestResources = resources.slice(0, 6)
+  const latestLearningJournals = learningJournals.slice(0, 6)
 
   return (
     <div className="space-y-16">
@@ -24,22 +25,13 @@ export default function HomePage() {
         </p>
       </section>
 
-      <Section title="AI 工具" icon={<Sparkles className="w-5 h-5" />} moreLink="/tools" accent="primary" count={tools.length}>
+      <Section title="学习记录" icon={<BookOpen className="w-5 h-5" />} moreLink="/learning-journal" accent="secondary" count={learningJournals.length}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
-          {latestTools.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
+          {latestLearningJournals.map((journal) => (
+            <LearningJournalCard key={journal.id} journal={journal} />
           ))}
         </div>
-        {latestTools.length === 0 && <EmptyState message="暂无工具数据" />}
-      </Section>
-
-      <Section title="提示词库" icon={<FileText className="w-5 h-5" />} moreLink="/prompts" accent="secondary" count={prompts.length}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
-          {latestPrompts.map((prompt) => (
-            <PromptCard key={prompt.id} prompt={prompt} />
-          ))}
-        </div>
-        {latestPrompts.length === 0 && <EmptyState message="暂无提示词数据" />}
+        {latestLearningJournals.length === 0 && <EmptyState message="暂无学习记录数据" />}
       </Section>
 
       <Section title="项目案例" icon={<FolderGit2 className="w-5 h-5" />} moreLink="/projects" accent="tertiary" count={projects.length}>
@@ -49,6 +41,15 @@ export default function HomePage() {
           ))}
         </div>
         {latestProjects.length === 0 && <EmptyState message="暂无项目数据" />}
+      </Section>
+
+      <Section title="提示词库" icon={<FileText className="w-5 h-5" />} moreLink="/prompts" accent="secondary" count={prompts.length}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
+          {latestPrompts.map((prompt) => (
+            <PromptCard key={prompt.id} prompt={prompt} />
+          ))}
+        </div>
+        {latestPrompts.length === 0 && <EmptyState message="暂无提示词数据" />}
       </Section>
 
       <Section title="行业资讯" icon={<Newspaper className="w-5 h-5" />} moreLink="/news" accent="warning" count={news.length}>
@@ -67,6 +68,15 @@ export default function HomePage() {
           ))}
         </div>
         {latestResources.length === 0 && <EmptyState message="暂无资源数据" />}
+      </Section>
+
+      <Section title="AI 工具" icon={<Sparkles className="w-5 h-5" />} moreLink="/tools" accent="primary" count={tools.length}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-stagger">
+          {latestTools.map((tool) => (
+            <ToolCard key={tool.id} tool={tool} />
+          ))}
+        </div>
+        {latestTools.length === 0 && <EmptyState message="暂无工具数据" />}
       </Section>
     </div>
   )
@@ -295,6 +305,39 @@ function ResourceCard({ resource }: { resource: any }) {
         访问网站
       </a>
     </div>
+  )
+}
+
+function LearningJournalCard({ journal }: { journal: any }) {
+  return (
+    <Link
+      to={`/learning-journal/${journal.id}`}
+      className="group block p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200"
+    >
+      <div className="flex items-start gap-4 mb-4">
+        <div className="w-12 h-12 rounded-xl bg-accent-secondary/10 flex items-center justify-center flex-shrink-0">
+          <BookOpen className="w-6 h-6 text-accent-secondary" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-text-primary text-lg group-hover:text-accent-secondary transition-colors">{journal.title}</h3>
+          <span className="text-sm text-text-muted">{journal.category}</span>
+        </div>
+      </div>
+      <p className="text-text-secondary text-sm line-clamp-2 mb-3">{journal.excerpt}</p>
+      <div className="flex flex-wrap gap-1.5 mb-3">
+        {journal.tags.slice(0, 3).map((tag: string) => (
+          <span key={tag} className="px-2 py-0.5 rounded-md bg-bg-tertiary text-xs text-text-muted">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <div className="flex items-center justify-end">
+        <span className="flex items-center gap-1 text-sm text-text-muted group-hover:text-accent-secondary transition-colors">
+          阅读更多
+          <ArrowRight className="w-4 h-4" />
+        </span>
+      </div>
+    </Link>
   )
 }
 

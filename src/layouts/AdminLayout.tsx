@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { Link, useLocation, Outlet } from 'react-router-dom'
 import { 
   LayoutDashboard, 
-  Newspaper, 
-  Wrench, 
-  FileText, 
+  BookOpen,
   FolderGit2, 
+  FileText, 
+  Newspaper, 
   Sparkles,
+  Wrench,
   Menu, 
   X,
   ArrowLeft
@@ -15,11 +16,12 @@ import cn from 'classnames'
 
 const ADMIN_NAV_ITEMS = [
   { path: '/admin', label: '仪表盘', icon: <LayoutDashboard className="w-5 h-5" /> },
-  { path: '/admin/news', label: '资讯管理', icon: <Newspaper className="w-5 h-5" /> },
-  { path: '/admin/tools', label: '工具管理', icon: <Wrench className="w-5 h-5" /> },
-  { path: '/admin/prompts', label: '提示词管理', icon: <FileText className="w-5 h-5" /> },
-  { path: '/admin/projects', label: '项目管理', icon: <FolderGit2 className="w-5 h-5" /> },
-  { path: '/admin/resources', label: '资源管理', icon: <Sparkles className="w-5 h-5" /> },
+  { path: '/admin/learning-journal', label: '学习记录', icon: <BookOpen className="w-5 h-5" /> },
+  { path: '/admin/projects', label: '项目案例', icon: <FolderGit2 className="w-5 h-5" /> },
+  { path: '/admin/prompts', label: '提示词库', icon: <FileText className="w-5 h-5" /> },
+  { path: '/admin/news', label: '行业资讯', icon: <Newspaper className="w-5 h-5" /> },
+  { path: '/admin/resources', label: 'AI 资源', icon: <Sparkles className="w-5 h-5" /> },
+  { path: '/admin/tools', label: 'AI 工具', icon: <Wrench className="w-5 h-5" /> },
 ]
 
 export function AdminLayout() {
