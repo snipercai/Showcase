@@ -19,20 +19,15 @@ export default function NewsAdminPage() {
     tags: '',
   })
 
-  const filteredNews = news.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.summary.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
   const handleOpenModal = (item?: NewsItem) => {
     if (item) {
       setEditingItem(item)
       setFormData({
         title: item.title,
-        summary: item.summary,
+        summary: item.summary || '',
         content: item.content,
         category: item.category,
-        tags: item.tags.join(', '),
+        tags: (item.tags || []).join(', '),
       })
     } else {
       setEditingItem(null)
@@ -46,6 +41,11 @@ export default function NewsAdminPage() {
     }
     setShowModal(true)
   }
+
+  const filteredNews = news.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.summary.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   const handleCloseModal = () => {
     setShowModal(false)
@@ -136,11 +136,11 @@ export default function NewsAdminPage() {
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex flex-wrap gap-1 max-w-xs">
-                      {item.tags.slice(0, 2).map(tag => (
+                      {(item.tags || []).slice(0, 2).map(tag => (
                         <Tag key={tag} label={tag} variant="primary" />
                       ))}
-                      {item.tags.length > 2 && (
-                        <span className="text-text-muted text-xs">+{item.tags.length - 2}</span>
+                      {(item.tags || []).length > 2 && (
+                        <span className="text-text-muted text-xs">+{(item.tags || []).length - 2}</span>
                       )}
                     </div>
                   </td>

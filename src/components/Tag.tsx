@@ -4,9 +4,10 @@ interface TagProps {
   children: ReactNode
   className?: string
   variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning'
+  onClick?: () => void
 }
 
-export function Tag({ children, className = '', variant = 'default' }: TagProps) {
+export function Tag({ children, className = '', variant = 'default', onClick }: TagProps) {
   const variantClasses = {
     default: 'bg-bg-tertiary text-text-muted',
     primary: 'bg-accent-primary/10 text-accent-primary',
@@ -16,7 +17,10 @@ export function Tag({ children, className = '', variant = 'default' }: TagProps)
   }
 
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${variantClasses[variant]} ${className}`}>
+    <span 
+      className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${variantClasses[variant]} ${className} ${onClick ? 'cursor-pointer' : ''}`}
+      onClick={onClick}
+    >
       {children}
     </span>
   )
