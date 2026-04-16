@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom'
 import { Home, Newspaper, Wrench, MessageSquare, Briefcase, Cpu, Sparkles, BookOpen } from 'lucide-react'
+import { ThemeToggle } from '@/components'
 
 export function MainLayout() {
   return (
@@ -23,9 +24,10 @@ export function MainLayout() {
               <NavLink to="/news" icon={<Newspaper className="w-4 h-4" />}>行业资讯</NavLink>
               <NavLink to="/resources" icon={<Sparkles className="w-4 h-4" />}>AI 资源</NavLink>
               <NavLink to="/tools" icon={<Wrench className="w-4 h-4" />}>AI 工具</NavLink>
+              <ThemeToggle />
               <Link
                 to="/admin"
-                className="ml-4 px-4 py-2 rounded-lg cyber-button text-sm font-medium"
+                className="ml-2 px-4 py-2 rounded-lg cyber-button text-sm font-medium"
               >
                 管理
               </Link>
