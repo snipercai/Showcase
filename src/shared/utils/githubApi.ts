@@ -70,7 +70,11 @@ export async function getGitHubFile(path: string): Promise<string> {
   const data = await response.json()
   
   if (data.type === 'file') {
-    return atob(data.content)
+    // 修复：正确解码 UTF-8 中文字符
+    // atob() 解码为 binary string (Latin-1)，需要转换为 UTF-8
+    const binaryString = atob(data.content)
+    const bytes = Uint8Array.from(binaryString, c => c.charCodeAt(0))
+    return new TextDecoder('utf-8').decode(bytes)
   }
   
   throw new Error('Not a file')
