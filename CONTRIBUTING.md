@@ -76,7 +76,7 @@ npm run preview
 ```
 main        # 主分支，生产环境代码
   │
-  └── develop   # 开发分支，集成各功能
+  └── dev   # 开发分支，集成各功能
         │
         ├── feature/xxx   # 功能分支
         ├── bugfix/xxx    # 修复分支
@@ -94,11 +94,11 @@ main        # 主分支，生产环境代码
 
 ### 工作流程
 
-1. 从 `develop` 分支创建功能分支
+1. 从 `dev` 分支创建功能分支
 2. 在功能分支上开发和提交代码
-3. 创建 PR 合并到 `develop`
+3. 创建 PR 合并到 `dev`
 4. Code Review 通过后合并
-5. 定期从 `develop` 创建 release 分支进行发布
+5. 定期从 `deve` 创建 release 分支进行发布
 
 ## 提交规范
 

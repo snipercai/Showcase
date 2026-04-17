@@ -220,14 +220,14 @@ function ToolCard({
   highlightText: (text: string, query: string) => React.ReactNode
 }) {
   return (
-    <div className="p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/tools/${tool.id}`}>
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-accent-primary/10 flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-accent-primary" />
           </div>
           <div>
-            <h3 className="font-semibold text-text-primary">
+            <h3 className="font-semibold text-text-primary group-hover:text-accent-primary transition-colors">
               {highlightText(tool.name, query)}
             </h3>
             <span className="text-xs text-text-muted">{tool.category}</span>
@@ -263,13 +263,13 @@ function PromptCard({
   highlightText: (text: string, query: string) => React.ReactNode
 }) {
   return (
-    <div className="p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/prompts/${prompt.id}`}>
       <div className="flex items-start gap-3 mb-2">
         <div className="w-8 h-8 rounded-lg bg-accent-secondary/10 flex items-center justify-center flex-shrink-0">
           <FileText className="w-4 h-4 text-accent-secondary" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-text-primary">
+          <h3 className="font-semibold text-text-primary group-hover:text-accent-secondary transition-colors">
             {highlightText(prompt.title, query)}
           </h3>
           <span className="text-xs text-text-muted">{prompt.category}</span>
@@ -292,13 +292,13 @@ function ProjectCard({
   highlightText: (text: string, query: string) => React.ReactNode
 }) {
   return (
-    <div className="p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-tertiary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-tertiary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/projects/${project.id}`}>
       <div className="flex items-start gap-3 mb-2">
         <div className="w-8 h-8 rounded-lg bg-accent-tertiary/10 flex items-center justify-center flex-shrink-0">
           <FolderGit2 className="w-4 h-4 text-accent-tertiary" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-text-primary">
+          <h3 className="font-semibold text-text-primary group-hover:text-accent-tertiary transition-colors">
             {highlightText(project.title, query)}
           </h3>
           <span className="text-xs text-text-muted">开源项目</span>
@@ -328,10 +328,7 @@ function NewsCard({
   highlightText: (text: string, query: string) => React.ReactNode
 }) {
   return (
-    <Link
-      to={`/news/${news.id}`}
-      className="group block p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-warning/30 hover:shadow-md transition-all duration-200"
-    >
+    <div className="group p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-warning/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/news/${news.id}`}>
       <div className="flex items-start gap-3 mb-2">
         <div className="w-8 h-8 rounded-lg bg-accent-warning/10 flex items-center justify-center flex-shrink-0">
           <Newspaper className="w-4 h-4 text-accent-warning" />
@@ -346,7 +343,7 @@ function NewsCard({
       <p className="text-sm text-text-secondary line-clamp-2">
         {highlightText(news.content, query)}
       </p>
-    </Link>
+    </div>
   )
 }
 
@@ -360,14 +357,14 @@ function ResourceCard({
   highlightText: (text: string, query: string) => React.ReactNode
 }) {
   return (
-    <div className="p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/resources/${resource.id}`}>
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-accent-primary/10 flex items-center justify-center">
             <Globe className="w-4 h-4 text-accent-primary" />
           </div>
           <div>
-            <h3 className="font-semibold text-text-primary">
+            <h3 className="font-semibold text-text-primary group-hover:text-accent-primary transition-colors">
               {highlightText(resource.name, query)}
             </h3>
             <span className="text-xs text-text-muted">{resource.category}</span>
@@ -396,10 +393,7 @@ function LearningJournalCard({
   highlightText: (text: string, query: string) => React.ReactNode
 }) {
   return (
-    <Link
-      to={`/learning-journal/${journal.id}`}
-      className="group block p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200"
-    >
+    <div className="group p-4 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/learning-journal/${journal.id}`}>
       <div className="flex items-start gap-3 mb-2">
         <div className="w-8 h-8 rounded-lg bg-accent-secondary/10 flex items-center justify-center flex-shrink-0">
           <BookOpen className="w-4 h-4 text-accent-secondary" />
@@ -414,6 +408,6 @@ function LearningJournalCard({
       <p className="text-sm text-text-secondary line-clamp-2">
         {highlightText(journal.excerpt, query)}
       </p>
-    </Link>
+    </div>
   )
 }

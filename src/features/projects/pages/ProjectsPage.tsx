@@ -27,16 +27,17 @@ export function ProjectsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {projects.map((project) => (
-          <div
+          <Link
             key={project.id}
-            className="p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-tertiary/30 hover:shadow-md transition-all duration-200"
+            to={`/projects/${project.id}`}
+            className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-tertiary/30 hover:shadow-md transition-all duration-200"
           >
             <div className="flex items-start gap-3 mb-4">
               <div className="w-11 h-11 rounded-xl bg-accent-tertiary/10 flex items-center justify-center flex-shrink-0">
                 <FolderGit2 className="w-5 h-5 text-accent-tertiary" />
               </div>
               <div>
-                <h3 className="font-semibold text-text-primary">{project.title}</h3>
+                <h3 className="font-semibold text-text-primary group-hover:text-accent-tertiary transition-colors">{project.title}</h3>
                 <span className="text-xs text-text-muted">开源项目</span>
               </div>
             </div>
@@ -51,29 +52,35 @@ export function ProjectsPage() {
               ))}
             </div>
 
-            <div className="pt-3 border-t border-border-subtle flex items-center gap-4">
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent-tertiary transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                源码
-              </a>
-              {project.demoUrl && (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-accent-primary hover:underline"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  演示
-                </a>
-              )}
-            </div>
-          </div>
+            {(project.githubUrl || project.demoUrl) && (
+              <div className="pt-3 border-t border-border-subtle flex items-center gap-4">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent-tertiary transition-colors"
+                  >
+                    <Github className="w-4 h-4" />
+                    源码
+                  </a>
+                )}
+                {project.demoUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-sm text-accent-primary hover:underline"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    演示
+                  </a>
+                )}
+              </div>
+            )}
+          </Link>
         ))}
       </div>
 

@@ -1,62 +1,12 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import type { ResourceItem, LearningJournalItem } from '@/shared/types'
-
-// 定义类型
-interface NewsItem {
-  id: string
-  title: string
-  summary: string
-  content: string
-  category: string
-  tags: string[]
-  createdAt: string
-  updatedAt: string
-}
-
-interface ToolItem {
-  id: string
-  name: string
-  description: string
-  category: string
-  tags: string[]
-  website: string
-  isFree: boolean
-  createdAt: string
-  updatedAt: string
-}
-
-interface PromptItem {
-  id: string
-  title: string
-  content: string
-  category: string
-  tags: string[]
-  createdAt: string
-  updatedAt: string
-}
-
-interface ProjectItem {
-  id: string
-  title: string
-  description: string
-  techStack: string[]
-  githubUrl: string
-  demoUrl?: string
-  createdAt: string
-  updatedAt: string
-}
-
-interface LearningJournalItemLocal {
-  id: string
-  title: string
-  excerpt: string
-  content: string
-  category: string
-  tags: string[]
-  coverImage?: string
-  createdAt: string
-  updatedAt: string
-}
+import type {
+  ResourceItem,
+  LearningJournalItem,
+  NewsItem,
+  ToolItem,
+  PromptItem,
+  ProjectItem
+} from '@/shared/types'
 
 // 初始数据
 const initialNews: NewsItem[] = [
@@ -175,7 +125,7 @@ const initialResources: ResourceItem[] = [
   }
 ]
 
-const initialLearningJournals: LearningJournalItemLocal[] = [
+const initialLearningJournals: LearningJournalItem[] = [
   {
     id: 'journal-1',
     title: '深度学习入门学习笔记',
