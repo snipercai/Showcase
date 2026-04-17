@@ -1,8 +1,16 @@
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { Home, Newspaper, Wrench, MessageSquare, Briefcase, Cpu, Sparkles, BookOpen } from 'lucide-react'
-import { ThemeToggle } from '@/components'
+import { ThemeToggle, SearchInput } from '@/components'
 
 export function MainLayout() {
+  const navigate = useNavigate()
+
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query)}`)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-bg-primary">
       <header className="sticky top-0 z-50 bg-bg-primary/95 backdrop-blur-md border-b border-border-subtle">
@@ -24,6 +32,14 @@ export function MainLayout() {
               <NavLink to="/news" icon={<Newspaper className="w-4 h-4" />}>行业资讯</NavLink>
               <NavLink to="/resources" icon={<Sparkles className="w-4 h-4" />}>AI 资源</NavLink>
               <NavLink to="/tools" icon={<Wrench className="w-4 h-4" />}>AI 工具</NavLink>
+            </nav>
+            <div className="flex items-center gap-2">
+              <div className="w-64">
+                <SearchInput
+                  placeholder="搜索..."
+                  onSearch={handleSearch}
+                />
+              </div>
               <ThemeToggle />
               <Link
                 to="/admin"
@@ -31,7 +47,7 @@ export function MainLayout() {
               >
                 管理
               </Link>
-            </nav>
+            </div>
           </div>
         </div>
       </header>
@@ -43,7 +59,7 @@ export function MainLayout() {
       <footer className="border-t border-border-subtle mt-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between text-text-muted text-sm">
-            <p>© 2026 AI 资源中心. 保留所有权利.</p>
+            <p>© 2026 AI 资源中心。保留所有权利.</p>
             <p className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-accent-success" />
               所有系统正常运行
