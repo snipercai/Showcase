@@ -29,7 +29,8 @@ export function ToolsPage() {
         {tools.map((tool) => (
           <div
             key={tool.id}
-            className="p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200"
+            className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200 cursor-pointer"
+            onClick={() => window.location.href = `/tools/${tool.id}`}
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-3">

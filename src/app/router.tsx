@@ -7,11 +7,16 @@ const HomePage = lazy(() => import('@/features/home/HomePage'))
 const NewsPage = lazy(() => import('@/features/news/pages/NewsPage').then(m => ({ default: m.NewsPage })))
 const NewsDetailPage = lazy(() => import('@/features/news/pages/NewsDetailPage').then(m => ({ default: m.NewsDetailPage })))
 const ToolsPage = lazy(() => import('@/features/tools/pages/ToolsPage').then(m => ({ default: m.ToolsPage })))
+const ToolDetailPage = lazy(() => import('@/features/tools/pages/ToolDetailPage').then(m => ({ default: m.ToolDetailPage })))
 const PromptsPage = lazy(() => import('@/features/prompts/pages/PromptsPage').then(m => ({ default: m.PromptsPage })))
+const PromptDetailPage = lazy(() => import('@/features/prompts/pages/PromptDetailPage').then(m => ({ default: m.PromptDetailPage })))
 const ProjectsPage = lazy(() => import('@/features/projects/pages/ProjectsPage').then(m => ({ default: m.ProjectsPage })))
+const ProjectDetailPage = lazy(() => import('@/features/projects/pages/ProjectDetailPage').then(m => ({ default: m.ProjectDetailPage })))
 const ResourcesPage = lazy(() => import('@/features/resources/pages/ResourcesPage').then(m => ({ default: m.ResourcesPage })))
+const ResourceDetailPage = lazy(() => import('@/features/resources/pages/ResourceDetailPage').then(m => ({ default: m.ResourceDetailPage })))
 const LearningJournalPage = lazy(() => import('@/features/learning-journal/pages/LearningJournalPage').then(m => ({ default: m.LearningJournalPage })))
 const LearningJournalDetailPage = lazy(() => import('@/features/learning-journal/pages/LearningJournalDetailPage').then(m => ({ default: m.LearningJournalDetailPage })))
+const SearchResultsPage = lazy(() => import('@/features/search/pages/SearchResultsPage').then(m => ({ default: m.SearchResultsPage })))
 
 const AdminDashboard = lazy(() => import('@/features/admin/pages/AdminDashboard'))
 const NewsAdminPage = lazy(() => import('@/features/admin/pages/NewsAdminPage'))
@@ -65,10 +70,26 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'tools/:id',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <ToolDetailPage />
+          </Suspense>
+        ),
+      },
+      {
         path: 'prompts',
         element: (
           <Suspense fallback={LoadingFallback}>
             <PromptsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'prompts/:id',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <PromptDetailPage />
           </Suspense>
         ),
       },
@@ -81,10 +102,26 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'projects/:id',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <ProjectDetailPage />
+          </Suspense>
+        ),
+      },
+      {
         path: 'resources',
         element: (
           <Suspense fallback={LoadingFallback}>
             <ResourcesPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'resources/:id',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <ResourceDetailPage />
           </Suspense>
         ),
       },
@@ -101,6 +138,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={LoadingFallback}>
             <LearningJournalDetailPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'search',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <SearchResultsPage />
           </Suspense>
         ),
       },

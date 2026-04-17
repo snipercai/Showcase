@@ -48,14 +48,18 @@ export function PromptsPage() {
 function PromptCard({ prompt }: { prompt: any }) {
   const [copied, setCopied] = useState(false)
 
-  const handleCopy = () => {
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation()
     navigator.clipboard.writeText(prompt.content)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   return (
-    <div className="p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200">
+    <div
+      className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200 cursor-pointer"
+      onClick={() => window.location.href = `/prompts/${prompt.id}`}
+    >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-xl bg-accent-secondary/10 flex items-center justify-center">

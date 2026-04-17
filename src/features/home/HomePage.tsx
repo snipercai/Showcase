@@ -131,14 +131,14 @@ function Section({
 
 function ToolCard({ tool }: { tool: any }) {
   return (
-    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/tools/${tool.id}`}>
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 rounded-xl bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
           <Sparkles className="w-6 h-6 text-accent-primary" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-text-primary text-lg">{tool.name}</h3>
+            <h3 className="font-semibold text-text-primary text-lg group-hover:text-accent-primary transition-colors">{tool.name}</h3>
             <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
               tool.isFree ? 'bg-accent-success/10 text-accent-success' : 'bg-accent-warning/10 text-accent-warning'
             }`}>
@@ -161,6 +161,7 @@ function ToolCard({ tool }: { tool: any }) {
           href={tool.website}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
           className="flex items-center gap-1 text-sm text-accent-primary hover:underline"
         >
           <ExternalLink className="w-4 h-4" />
@@ -174,17 +175,18 @@ function ToolCard({ tool }: { tool: any }) {
 function PromptCard({ prompt }: { prompt: any }) {
   const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     navigator.clipboard.writeText(prompt.content)
   }
 
   return (
-    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-secondary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/prompts/${prompt.id}`}>
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 rounded-xl bg-accent-secondary/10 flex items-center justify-center flex-shrink-0">
           <FileText className="w-6 h-6 text-accent-secondary" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-text-primary text-lg">{prompt.title}</h3>
+          <h3 className="font-semibold text-text-primary text-lg group-hover:text-accent-secondary transition-colors">{prompt.title}</h3>
           <span className="text-sm text-text-muted">{prompt.category}</span>
         </div>
       </div>
@@ -211,13 +213,13 @@ function PromptCard({ prompt }: { prompt: any }) {
 
 function ProjectCard({ project }: { project: any }) {
   return (
-    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-tertiary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-tertiary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/projects/${project.id}`}>
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 rounded-xl bg-accent-tertiary/10 flex items-center justify-center flex-shrink-0">
           <FolderGit2 className="w-6 h-6 text-accent-tertiary" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-text-primary text-lg">{project.title}</h3>
+          <h3 className="font-semibold text-text-primary text-lg group-hover:text-accent-tertiary transition-colors">{project.title}</h3>
           <span className="text-sm text-text-muted">开源项目</span>
         </div>
       </div>
@@ -229,15 +231,32 @@ function ProjectCard({ project }: { project: any }) {
           </span>
         ))}
       </div>
-      <a
-        href={project.githubUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-1 text-sm text-text-secondary hover:text-accent-tertiary transition-colors"
-      >
-        <ExternalLink className="w-4 h-4" />
-        查看源码
-      </a>
+      {(project.githubUrl || project.demoUrl) && (
+        <div className="flex items-center gap-3">
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm text-text-secondary hover:text-accent-tertiary transition-colors"
+            >
+              <ExternalLink className="w-4 h-4" />
+              源码
+            </a>
+          )}
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm text-accent-primary hover:underline"
+            >
+              <ExternalLink className="w-4 h-4" />
+              演示
+            </a>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -270,14 +289,14 @@ function NewsCard({ news }: { news: any }) {
 
 function ResourceCard({ resource }: { resource: any }) {
   return (
-    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200">
+    <div className="group p-5 rounded-xl bg-bg-elevated border border-border-subtle hover:border-accent-primary/30 hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => window.location.href = `/resources/${resource.id}`}>
       <div className="flex items-start gap-4 mb-4">
         <div className="w-12 h-12 rounded-xl bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
           <Globe className="w-6 h-6 text-accent-primary" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-text-primary text-lg">{resource.name}</h3>
+            <h3 className="font-semibold text-text-primary text-lg group-hover:text-accent-primary transition-colors">{resource.name}</h3>
             <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
               resource.isFree ? 'bg-accent-success/10 text-accent-success' : 'bg-accent-warning/10 text-accent-warning'
             }`}>
@@ -299,6 +318,7 @@ function ResourceCard({ resource }: { resource: any }) {
         href={resource.url}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
         className="flex items-center gap-1 text-sm text-accent-primary hover:underline"
       >
         <ExternalLink className="w-4 h-4" />
