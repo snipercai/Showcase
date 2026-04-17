@@ -94,7 +94,7 @@ export default function ResourcesAdminPage() {
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted w-5 h-5" />
         <SearchInput
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="搜索资源..."
           className="pl-12"
         />

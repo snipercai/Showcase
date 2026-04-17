@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "test:types": "vitest src/test/types.test.ts src/test/api-types.test.ts src/test/component-types.test.ts",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -26,6 +28,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^4.1.4",
     "@vitest/ui": "^4.1.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",

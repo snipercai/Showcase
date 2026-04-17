@@ -6,14 +6,20 @@ afterEach(() => {
   cleanup()
 })
 
-global.localStorage = {
+const mockLocalStorage: Storage = {
   getItem: vi.fn(),
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
   key: vi.fn(),
   length: 0,
-} as Storage
+}
+
+Object.defineProperty(globalThis, 'localStorage', {
+  value: mockLocalStorage,
+  writable: true,
+  configurable: true,
+})
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

@@ -102,7 +102,7 @@ export default function NewsAdminPage() {
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted w-5 h-5" />
         <SearchInput
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="搜索资讯..."
           className="pl-12"
         />
@@ -137,7 +137,7 @@ export default function NewsAdminPage() {
                   <td className="px-4 py-4">
                     <div className="flex flex-wrap gap-1 max-w-xs">
                       {(item.tags || []).slice(0, 2).map(tag => (
-                        <Tag key={tag} label={tag} variant="primary" />
+                        <Tag key={tag} variant="primary">{tag}</Tag>
                       ))}
                       {(item.tags || []).length > 2 && (
                         <span className="text-text-muted text-xs">+{(item.tags || []).length - 2}</span>
