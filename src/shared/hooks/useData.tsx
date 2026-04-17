@@ -15,7 +15,7 @@ import {
   initialResources,
   initialLearningJournals
 } from '@/data'
-import { syncDataFromGitHub, type SyncResult } from '@/shared/services/dataSync'
+import { syncDataFromGitHub, type SyncResult, type SyncProgress } from '@/shared/services/dataSync'
 import { DATA_SYNC_CONFIG } from '@/shared/config'
 
 const STORAGE_KEYS = {
@@ -61,9 +61,10 @@ interface DataContextType {
   
   resetToDefaults: () => void
   
-  syncData: () => Promise<SyncResult>
+  syncData: (onProgress?: (progress: SyncProgress) => void) => Promise<SyncResult>
   syncing: boolean
   lastSyncTime: number | null
+  currentProgress: SyncProgress | null
 }
 
 const DataContext = createContext<DataContextType | null>(null)
@@ -91,6 +92,7 @@ function saveToStorage<T>(key: string, data: T[]): void {
 export function DataProvider({ children }: { children: ReactNode }) {
   const [syncing, setSyncing] = useState(false)
   const [lastSyncTime, setLastSyncTime] = useState<number | null>(null)
+  const [currentProgress, setCurrentProgress] = useState<SyncProgress | null>(null)
   
   const [news, setNews] = useState<NewsItem[]>(() => 
     loadFromStorage(STORAGE_KEYS.news, initialNews)
@@ -124,10 +126,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const performSync = useCallback(async (): Promise<SyncResult> => {
+  const performSync = useCallback(async (
+    onProgress?: (progress: SyncProgress) => void
+  ): Promise<SyncResult> => {
     setSyncing(true)
     try {
-      const result = await syncDataFromGitHub()
+      const result = await syncDataFromGitHub((progress) => {
+        setCurrentProgress(progress)
+        onProgress?.(progress)
+      })
       
       if (result.success && result.updated) {
         setNews(loadFromStorage(STORAGE_KEYS.news, initialNews))
@@ -153,7 +160,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     } finally {
       setSyncing(false)
     }
-  }, [])
+  }, [setSyncing, setLastSyncTime])
 
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.news, news)
@@ -344,6 +351,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       syncData: performSync,
       syncing,
       lastSyncTime,
+      currentProgress,
     }}>
       {children}
     </DataContext.Provider>
