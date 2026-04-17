@@ -133,6 +133,13 @@ export default function AdminDashboard() {
               <Plus className="w-5 h-5 text-accent-success" />
               <span className="text-sm font-medium text-text-primary">添加 AI 工具</span>
             </Link>
+            <Link
+              to="/admin/resources"
+              className="flex items-center gap-2 p-4 rounded-xl bg-bg-tertiary border border-border-default hover:border-accent-primary/30 hover:bg-accent-primary/5 transition-all duration-200"
+            >
+              <Plus className="w-5 h-5 text-accent-primary" />
+              <span className="text-sm font-medium text-text-primary">添加资源</span>
+            </Link>
           </div>
         </Card>
 
