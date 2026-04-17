@@ -1,4 +1,6 @@
-export const promptsData = [
+import type { PromptItem } from '@/shared/types'
+
+export const initialPrompts: PromptItem[] = [
   {
     id: 'prompt-1',
     title: '写文章',
@@ -17,4 +19,4 @@ export const promptsData = [
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
-];
+]

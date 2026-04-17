@@ -1,5 +1,5 @@
 import type { ToolItem } from './types'
-import { toolsData as initialTools } from '@/data/tools'
+import { initialTools } from '@/data'
 
 const STORAGE_KEY = 'ai-hub-tools'
 
