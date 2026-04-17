@@ -10,7 +10,8 @@ import {
   Wrench,
   Menu, 
   X,
-  ArrowLeft
+  ArrowLeft,
+  RefreshCcw
 } from 'lucide-react'
 import cn from 'classnames'
 
@@ -22,6 +23,7 @@ const ADMIN_NAV_ITEMS = [
   { path: '/admin/news', label: '行业资讯', icon: <Newspaper className="w-5 h-5" /> },
   { path: '/admin/resources', label: 'AI 资源', icon: <Sparkles className="w-5 h-5" /> },
   { path: '/admin/tools', label: 'AI 工具', icon: <Wrench className="w-5 h-5" /> },
+  { path: '/admin/sync', label: '数据同步', icon: <RefreshCcw className="w-5 h-5" /> },
 ]
 
 export function AdminLayout() {

@@ -1,4 +1,6 @@
-export const newsData = [
+import type { NewsItem } from '@/shared/types'
+
+export const initialNews: NewsItem[] = [
   {
     id: 'news-1',
     title: 'OpenAI 发布 GPT-5',
@@ -19,4 +21,4 @@ export const newsData = [
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
-];
+]

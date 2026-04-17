@@ -1,5 +1,5 @@
 import type { PromptItem } from './types'
-import { promptsData as initialPrompts } from '@/data/prompts'
+import { initialPrompts } from '@/data'
 
 const STORAGE_KEY = 'ai-hub-prompts'
 

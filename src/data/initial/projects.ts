@@ -1,4 +1,6 @@
-export const projectsData = [
+import type { ProjectItem } from '@/shared/types'
+
+export const initialProjects: ProjectItem[] = [
   {
     id: 'project-1',
     title: 'AI 聊天机器人',
@@ -18,4 +20,4 @@ export const projectsData = [
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
-];
+]

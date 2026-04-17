@@ -1,4 +1,6 @@
-export const toolsData = [
+import type { ToolItem } from '@/shared/types'
+
+export const initialTools: ToolItem[] = [
   {
     id: 'tool-1',
     name: 'ChatGPT',
@@ -21,4 +23,4 @@ export const toolsData = [
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
-];
+]

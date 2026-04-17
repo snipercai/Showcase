@@ -1,5 +1,5 @@
 import type { ProjectItem } from './types'
-import { projectsData as initialProjects } from '@/data/projects'
+import { initialProjects } from '@/data'
 
 const STORAGE_KEY = 'ai-hub-projects'
 

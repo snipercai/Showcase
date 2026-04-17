@@ -1,5 +1,5 @@
 import type { NewsItem } from './types'
-import { newsData as initialNews } from '@/data/news'
+import { initialNews } from '@/data'
 
 const STORAGE_KEY = 'ai-hub-news'
 

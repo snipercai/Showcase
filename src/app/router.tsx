@@ -25,6 +25,7 @@ const PromptsAdminPage = lazy(() => import('@/features/admin/pages/PromptsAdminP
 const ProjectsAdminPage = lazy(() => import('@/features/admin/pages/ProjectsAdminPage'))
 const ResourcesAdminPage = lazy(() => import('@/features/admin/pages/ResourcesAdminPage'))
 const LearningJournalAdminPage = lazy(() => import('@/features/admin/pages/LearningJournalAdminPage'))
+const SyncSettingsPage = lazy(() => import('@/features/admin/pages/SyncSettingsPage'))
 
 const LoadingFallback = (
   <div className="flex items-center justify-center min-h-[400px]">
@@ -208,6 +209,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={LoadingFallback}>
             <LearningJournalAdminPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'sync',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <SyncSettingsPage />
           </Suspense>
         ),
       },
