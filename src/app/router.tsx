@@ -12,6 +12,7 @@ const ProjectsPage = lazy(() => import('@/features/projects/pages/ProjectsPage')
 const ResourcesPage = lazy(() => import('@/features/resources/pages/ResourcesPage').then(m => ({ default: m.ResourcesPage })))
 const LearningJournalPage = lazy(() => import('@/features/learning-journal/pages/LearningJournalPage').then(m => ({ default: m.LearningJournalPage })))
 const LearningJournalDetailPage = lazy(() => import('@/features/learning-journal/pages/LearningJournalDetailPage').then(m => ({ default: m.LearningJournalDetailPage })))
+const SearchResultsPage = lazy(() => import('@/features/search/pages/SearchResultsPage').then(m => ({ default: m.SearchResultsPage })))
 
 const AdminDashboard = lazy(() => import('@/features/admin/pages/AdminDashboard'))
 const NewsAdminPage = lazy(() => import('@/features/admin/pages/NewsAdminPage'))
@@ -101,6 +102,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={LoadingFallback}>
             <LearningJournalDetailPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'search',
+        element: (
+          <Suspense fallback={LoadingFallback}>
+            <SearchResultsPage />
           </Suspense>
         ),
       },
