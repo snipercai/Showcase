@@ -82,7 +82,7 @@ export default function ProjectsAdminPage() {
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted w-5 h-5" />
         <SearchInput
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="搜索项目..."
           className="pl-12"
         />
@@ -111,7 +111,7 @@ export default function ProjectsAdminPage() {
                   <td className="px-4 py-4">
                     <div className="flex flex-wrap gap-1 max-w-xs">
                       {item.techStack.slice(0, 3).map(tech => (
-                        <Tag key={tech} label={tech} variant="warning" />
+                        <Tag key={tech} variant="warning">{tech}</Tag>
                       ))}
                       {item.techStack.length > 3 && (
                         <span className="text-text-muted text-xs">+{item.techStack.length - 3}</span>
